@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 import mysql.connector
 from lib import credentials
-
+from . import settings
 
 def connectToDB():
     try:
         mydb = mysql.connector.connect(
+        host, user, password, database
         )
         return mydb
     except Exception as e:
