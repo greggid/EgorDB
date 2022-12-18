@@ -5,10 +5,14 @@ from . import settings
 
 def connectToDB():
     try:
-        mydb = mysql.connector.connect(
-        host, user, password, database
+        __mydb = mysql.connector.connect(
+        host="localhost",
+        user="egordb",
+        password="egordb_password",
+        database ="egordb"
+
         )
-        return mydb
+        return __mydb
     except Exception as e:
         raise SystemExit(e)
 
@@ -16,8 +20,8 @@ def connectToDB():
 __mydb = connectToDB()
 
 
-def connectMysql(login):
+def sqlRequest(login):
     mycursor = __mydb.cursor()
     mycursor.execute("SELECT * FROM users")
     myresult = mycursor.fetchone()
-    print(myresult)
+    return myresult

@@ -1,4 +1,4 @@
 host="localhost",
-user="egorroshch",
-password="test1234",
+user="egordb",
+password="egordb_password",
 database="egodb"

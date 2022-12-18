@@ -1,0 +1,7 @@
+1. create credentials for application in database (database, user, privelegies)
+2. connect application to database
+	2.1. get credentials from env var
+3. create tables throught application
+4. validate user credentials in /server/login request
+5. add cookie to database record
+
