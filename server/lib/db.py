@@ -2,7 +2,7 @@
 import mysql.connector
 from . import credentials
 from . import settings
-from fastapi import APIRouter
+
 
 
 
@@ -32,7 +32,17 @@ def isValidUserExist(username: str, password: str) -> bool:
         row = cursor.fetchall()
         return bool(row[0][0])
     except Exception as e:
-        raise SystemExit(e)
+        print(e)
+
+
+def getAllById(idshka: int):
+    try:
+        cursor = __mydb.cursor()
+        cursor.execute("SELECT * FROM data WHERE id = %s;", [idshka])
+        row = cursor.fetchall()
+        return row[0]
+ 
+
 
 
 

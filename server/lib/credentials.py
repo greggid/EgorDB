@@ -15,6 +15,13 @@ def credentialsExist(data: dict) -> bool:
         return True
     return False
 
+def credId(data: dict) -> bool:
+    idsearch = data.get("id", None)
+    if not (idsearch):
+        return False
+    if getAllById(idsearch):
+        return True
+    return False
 
 @router.post("/server/login")
 async def login(request: Request) -> dict:
@@ -22,6 +29,5 @@ async def login(request: Request) -> dict:
     if credentialsExist(data):
         return data
     return False
-
 
 
