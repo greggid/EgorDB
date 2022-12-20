@@ -34,13 +34,19 @@ def isValidUserExist(username: str, password: str) -> bool:
     except Exception as e:
         print(e)
 
+def setCookieInDB(username: str, password: str):
+    cursor = __mydb.cursor()
+    cursor.execute("SELECT password FROM users WHERE username = %s", [username])
+    row = cursor.fetchall()
+    ValidPass = row[0]
+    if ValidPass == password:
+        cursor.execute("UPDATE users SET ilovecookie = %s WHERE username = %s", [set_cookie, username])
+        result = cursor.fetchall()
+        print(result)
+        
 
-def getAllById(idshka: int):
-    try:
-        cursor = __mydb.cursor()
-        cursor.execute("SELECT * FROM data WHERE id = %s;", [idshka])
-        row = cursor.fetchall()
-        return row[0]
+
+
  
 
 

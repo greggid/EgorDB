@@ -29,6 +29,7 @@ async def create_cookie(request: Request, call_next):
 
 @app.post("server/login")
 
+
 def main():
     uvicorn.run("main:app", host="0.0.0.0", port=8000, workers=1)
 

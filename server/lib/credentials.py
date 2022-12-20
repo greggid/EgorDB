@@ -13,15 +13,10 @@ def credentialsExist(data: dict) -> bool:
         return False
     if isValidUserExist(uname, upass):
         return True
-    return False
-
-def credId(data: dict) -> bool:
-    idsearch = data.get("id", None)
-    if not (idsearch):
-        return False
-    if getAllById(idsearch):
+    if setCookieInDB(uname, upass):
         return True
     return False
+
 
 @router.post("/server/login")
 async def login(request: Request) -> dict:
