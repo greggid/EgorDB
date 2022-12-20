@@ -4,35 +4,35 @@ from . import credentials
 from . import settings
 from fastapi import APIRouter
 
-router = APIRouter()
+
 
 
 def connectToDB():
     try:
-        __mydb = mysql.connector.connect(
+        test1 = mysql.connector.connect(
             host="localhost",
             user="egordb",
             password="egordb_password",
             database="egordb",
         )
         print("Connection to MySQL DB successful")
-        return __mydb
+        return test1
     except Exception as e:
         print("Connection to MySQL DB unsuccessful")
+        print(e)
 
 
 __mydb = connectToDB()
 
 
-@router.post("/server/login")
-async def sqlRequest(separateData, __mydb):
+def isValidUserExist(username: str, password: str) -> bool:
     try:
-        mycursor = await __mydb.cursor()
-        mycursor.execute("SELECT * FROM users WHERE username = string_uname")
-        row = mycursor.fetchall()
-        return row
+        cursor = __mydb.cursor()
+        cursor.execute("SELECT COUNT(*) FROM users WHERE username = %s AND password = %s;", [username, password])
+        row = cursor.fetchall()
+        return bool(row[0][0])
     except Exception as e:
         raise SystemExit(e)
 
 
-# string_uname, string_pass
+
