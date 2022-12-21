@@ -1,28 +1,27 @@
 #!/usr/bin/env python3
 import mysql.connector
 from fastapi import Request, APIRouter
-from .db import isValidUserExist
+from . import db
 
 router = APIRouter()
 
 
-def credentialsExist(data: dict) -> bool:
+def cookieExist(cookie: str) -> bool:
+    cookie = request.cookies
+    if not egoSession in cookie:
+        
+        return False
+    return True
+
+@router.post("/server/login")
+async def login(request: Request):
+    cookie = request.cookies.get("egoSession")
+    data = await request.json()
     uname = data.get("username", None)
     upass = data.get("password", None)
     if not uname or not upass:
         return False
-    if isValidUserExist(uname, upass):
-        return True
-    if setCookieInDB(uname, upass):
-        return True
-    return False
-
-
-@router.post("/server/login")
-async def login(request: Request) -> dict:
-    data = await request.json()
-    if credentialsExist(data):
-        return data
-    return False
-
+    if not db.login(uname, upass, cookie):
+        return False
+    return True
 
