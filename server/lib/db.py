@@ -2,24 +2,31 @@
 import mysql.connector
 from . import credentials
 from . import settings
+from fastapi import Request
 
 
 def connectToDB():
     try:
-        test1 = mysql.connector.connect(
+        mydb = mysql.connector.connect(
             host="localhost",
             user="egordb",
             password="egordb_password",
             database="egordb",
         )
-        print("Connection to MySQL DB successful")
-        return test1
+        return mydb
     except Exception as e:
-        print("Connection to MySQL DB unsuccessful")
         print(e)
 
 
 __mydb = connectToDB()
+cursor = __mydb.cursor()
+
+
+def getAllData():
+    try:
+        cursor.execute("SELECT * from data;")
+    except Exception as e:
+        print(e)
 
 
 def login(username: str, password: str, cookie: str) -> bool:
@@ -31,7 +38,6 @@ def login(username: str, password: str, cookie: str) -> bool:
 
 def isValidUserExist(username: str, password: str) -> bool:
     try:
-        cursor = __mydb.cursor()
         cursor.execute(
             "SELECT COUNT(*) FROM users WHERE username = %s AND password = %s;",
             [username, password],
@@ -44,12 +50,10 @@ def isValidUserExist(username: str, password: str) -> bool:
 
 def setCookie(username: str, password: str, cookie: str) -> None:
     try:
-        cursor = __mydb.cursor()
         cursor.execute(
             "UPDATE users SET ilovecookie = %s WHERE username = %s AND password = %s;",
             [cookie, username, password],
-    )
+        )
         __mydb.commit()
     except Exception as e:
         print(e)
-

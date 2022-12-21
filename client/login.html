@@ -77,13 +77,13 @@ For security reason.
                 return new Promise(function(resolve, reject) {
                     req.onload = function() {
                         var dbResp = JSON.parse(req.responseText);
-                        if (req.status == 200 && dbResp == "Авторизация выполнена успешно!") {
+                        if (req.status == 200 && dbResp) {
                             window.location.href = "/";
                             return;
                         }
                         resolve(dbResp);
                     }
-                    req.open('POST', '/server/login', true);
+                    req.open('POST', 'http://127.0.0.1:8000/server/login', true);
                     req.setRequestHeader('Content-type','application/json; charset=utf-8');
                     var json = '{"username":"'+login.value+'","password":"'+password.value+'"}';
                     req.send(json);
