@@ -70,7 +70,8 @@ For security reason.
                     return;
                 }
                 var dbResp = await backendAuth();
-                ego_msg.innerHTML = dbResp;
+                ego_msg.innerHTML = dbResp.reason;
+
             }
             function backendAuth() {
                 var req = new XMLHttpRequest();
