@@ -3,15 +3,16 @@ import mysql.connector
 from . import validation
 from . import settings
 from fastapi import Request
+from .settings import settings
 
 
 def connectToDB():
     try:
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="egordb",
-            password="egordb_password",
-            database="egordb",
+            host=settings.EGORDB_DB_HOST,
+            user=settings.EGORDB_DB_USER,
+            password=EGORDB_DB_PASSWORD,
+            database=EGORDB_DB_DATABASE,
         )
         return mydb
     except Exception as e:
@@ -19,11 +20,11 @@ def connectToDB():
 
 
 __mydb = connectToDB()
-cursor = __mydb.cursor()
 
 
 def getAllData():
     try:
+        cursor = __mydb.cursor()
         cursor.execute("SELECT * from data;")
     except Exception as e:
         print(e)
@@ -38,6 +39,7 @@ def login(username: str, password: str, cookie: str) -> bool:
 
 def isValidUserExist(username: str, password: str) -> bool:
     try:
+        cursor = __mydb.cursor()
         cursor.execute(
             "SELECT COUNT(*) FROM users WHERE username = %s AND password = %s;",
             [username, password],
@@ -50,6 +52,7 @@ def isValidUserExist(username: str, password: str) -> bool:
 
 def setCookie(username: str, password: str, cookie: str) -> None:
     try:
+        cursor = __mydb.cursor()
         cursor.execute(
             "UPDATE users SET ilovecookie = %s WHERE username = %s AND password = %s;",
             [cookie, username, password],

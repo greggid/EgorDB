@@ -16,7 +16,10 @@ async def create_cookie(request: Request, call_next):
     response = await call_next(request)
     if "egoSession" not in request.cookies:
         response.set_cookie(
-            key="egoSession", value=helpers.randomStr(43), httponly=True, samesite="none"
+            key="egoSession",
+            value=helpers.randomStr(43),
+            httponly=True,
+            samesite="none",
         )
     return response
 
