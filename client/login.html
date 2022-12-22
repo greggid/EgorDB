@@ -38,14 +38,14 @@ For security reason.
     </head>
     <body>
         <div id="auth-container">
-            <h1>EgoDB</h1>
-            <h2>Авторизация</h2>
+            <h1>EgorDB</h1>
+            <h2>Authorization</h2>
             <div id="ego_msg"></div>
-            <input class="inputs" id="login" type="text" placeholder="Введите логин" />
+            <input class="inputs" id="login" type="text" placeholder="Enter login" />
             <br>
-            <input class="inputs" id="password" type="password" placeholder="Введите пароль" />
+            <input class="inputs" id="password" type="password" placeholder="Enter password" />
             <br>
-            <button id="auth_btn">Войти!</button>
+            <button id="auth_btn">Sign in!</button>
         </div>
         <script>
             var ego_msg = document.getElementById("ego_msg");
@@ -66,7 +66,7 @@ For security reason.
             }, false);
             async function beginAuth() {
                 if (!login.value || !password.value) {
-                    ego_msg.innerHTML = "Введите логин и пароль!";
+                    ego_msg.innerHTML = "Enter login and password!";
                     return;
                 }
                 var dbResp = await backendAuth();
