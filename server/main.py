@@ -2,20 +2,13 @@
 from fastapi import FastAPI
 from fastapi import Request
 from fastapi import Response
-from lib import credentials
-import random
-import string
+from lib import validation
 import uvicorn
 from lib import db
+from lib import helpers
 
 app = FastAPI()
-app.include_router(credentials.router)
-
-
-def randomStr(size):
-    source = string.ascii_letters + string.digits
-    result_str = "".join((random.choice(source) for i in range(size)))
-    return result_str
+app.include_router(validation.router)
 
 
 @app.middleware("http")
@@ -23,7 +16,7 @@ async def create_cookie(request: Request, call_next):
     response = await call_next(request)
     if "egoSession" not in request.cookies:
         response.set_cookie(
-            key="egoSession", value=randomStr(43), httponly=True, samesite="none"
+            key="egoSession", value=helpers.randomStr(43), httponly=True, samesite="none"
         )
     return response
 

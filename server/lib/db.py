@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import mysql.connector
-from . import credentials
+from . import validation
 from . import settings
 from fastapi import Request
 
